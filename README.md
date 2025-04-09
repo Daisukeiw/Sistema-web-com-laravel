@@ -1,2 +1,2 @@
 # Sistema-web-com-laravel
-colocando uma interface de bootstrap no laravel e fazendo um insert
+Criando as páginas e as rotas para select, update e delete
