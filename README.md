@@ -1,2 +1,2 @@
 # Sistema-web-com-laravel
-Projeto de CRUD em Laravel
+Primeira parte do projeto, com um layout básico e apenas o Insert feito.
