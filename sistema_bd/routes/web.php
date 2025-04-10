@@ -25,20 +25,23 @@ Route::post('/cadastrar-cliente', function(Request $request){
         'observacao' => $request->observacao
     ]);
 
-    echo "Produto criado com sucesso!";
+    return redirect('/consultar-cliente')-> with('success', 'Cliente cadastrado com sucesso!');
 });
 
-Route::get('/consultar-cliente/{id}', function($id){
+Route::get('/consultar-cliente', function(){
     //dd(Cliente::find($id)); //debug and die
-    $cliente = Cliente::find($id);
-    return view('consulta', ['cliente' => $cliente]);
+    $cliente = Cliente::all();
+    return view('consulta', ['clientes' => $cliente]);
 });
 
 
 Route::get('/editar-cliente/{id}', function($id){
     //dd(Produto::find($id)); //debug and die
     $cliente = Cliente::find($id);
-    return view('editar', ['cliente' => $cliente]);
+    if (!$cliente) {
+        return redirect('/editar-cliente')->with('error', 'Cliente não encontrado.');
+    }
+    return view('editar', ['cliente' => $cliente]); 
 });
 
 Route::post('/editar-cliente/{id}', function(Request $request, $id){
@@ -58,33 +61,15 @@ Route::post('/editar-cliente/{id}', function(Request $request, $id){
         'observacao' => $request->observacao
     ]);
 
-    echo "Produto editado com sucesso!";
+    return redirect('/consultar-cliente')->with('success', 'Cliente atualizado com sucesso!');
 });
 
 Route::get('/excluir-cliente/{id}', function($id){
     //dd($request->all());
     $cliente = Cliente::find($id);
-    return view('excluir', ['cliente' => $cliente]);
-
-});
-
-Route::post('/excluir-cliente/{id}', function(Request $request, $id){
-    //dd($request->all());
-    $cliente = Cliente::find($id);
-
-    $cliente->delete([
-        'id' => $id,
-        'nome' => $request->nome,
-        'email' => $request->email,
-        'endereco' => $request->endereco,
-        'telefone' => $request->telefone,
-        'bairro' => $request->bairro,
-        'cidade' => $request->cidade,
-        'cep' => $request->cep,
-        'complemento' => $request->complemento,
-        'uf' => $request->uf,
-        'observacao' => $request->observacao
-    ]);
-
-    echo "Produto excluido com sucesso!";
+    if (!$cliente) {
+        return redirect('/consultar-cliente')->with('error', 'Cliente não encontrado.');
+    }
+    $cliente->delete();
+    return redirect('/consultar-cliente')->with('success', 'Cliente deletado com sucesso!');
 });

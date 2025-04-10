@@ -1,106 +1,126 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tela de Consulta</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f1f3f5;
+        }
+
+        .navbar {
+            border-radius: 0 0 10px 10px;
+        }
+
+        .card {
+            background-color: white;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #4a69bd;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e3799;
+        }
+
+        .btn-danger {
+            background-color: #eb2f06;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #b71540;
+        }
+
+        .alert {
+            border-radius: 10px;
+        }
+
+        .titulo-consulta {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="http://127.0.0.1:8000/">Sistema Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="/">Sistema Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Alternar navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/">Cadastro</a>
+                            <a class="nav-link" href="/">Cadastro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="http://127.0.0.1:8000/consultar-cliente/7">Consulta</a>
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://127.0.0.1:8000/editar-cliente/7">Editar</a>
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://127.0.0.1:8000/excluir-cliente/7">Excluir</a>
+                            <a class="nav-link active" href="/consultar-cliente">Consulta</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <br>
+
         <div class="container">
-            <p class="fs-4">Consulta</p>
+            <p class="fs-4 titulo-consulta">Consulta</p>
 
-            <form>
-                <div class="mb-3">
-                    <label for="id" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" value="{{ $cliente->id }}" disabled>
-                </div>
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+            @endif
 
-                <div class="mb-3">
-                    <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="{{ $cliente->nome }}" readonly>
-                </div>
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+            @endif
 
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ $cliente->email }}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label for="endereco" class="form-label">Endereço</label>
-                    <input type="text" class="form-control" id="endereco" name="endereco" value="{{ $cliente->endereco }}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label for="telefone" class="form-label">Telefone</label>
-                    <input type="text" class="form-control" id="telefone" name="telefone" value="{{ $cliente->telefone }}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label for="bairro" class="form-label">Bairro</label>
-                    <input type="text" class="form-control" id="bairro" name="bairro" value="{{ $cliente->bairro }}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label for="cidade" class="form-label">Cidade</label>
-                    <input type="text" class="form-control" id="cidade" name="cidade" value="{{ $cliente->cidade }}" readonly>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="cep" class="form-label">CEP</label>
-                        <input type="text" class="form-control" id="cep" name="cep" value="{{ $cliente->cep }}" readonly>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="complemento" class="form-label">Complemento</label>
-                        <input type="text" class="form-control" id="complemento" name="complemento" value="{{ $cliente->complemento }}" readonly>
+            @if($clientes->isEmpty())
+            <div class="alert alert-warning" role="alert">
+                Nenhum cliente cadastrado.
+            </div>
+            @else
+            <div class="row">
+                @foreach($clientes as $cliente)
+                <div class="col-md-4 mb-4">
+                    <div class="card p-3">
+                        <h5 class="card-title">{{ $cliente->nome ?? 'Nome não informado' }}</h5>
+                        <p class="card-text">
+                            <strong>Email:</strong> {{ $cliente->email ?? 'Não informado' }}<br>
+                            <strong>Telefone:</strong> {{ $cliente->telefone ?? 'Não informado' }}<br>
+                            <strong>UF:</strong> {{ $cliente->uf ?? 'Não informado' }}<br>
+                            <strong>Observações:</strong> {{ $cliente->observacao ?? 'Sem observações' }}
+                        </p>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url('/editar-cliente/' . $cliente->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="{{ url('/excluir-cliente/' . $cliente->id) }}" class="btn btn-danger btn-sm">Excluir</a>
+                        </div>
                     </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="uf" class="form-label">UF</label>
-                    <select class="form-select" id="uf" name="uf" disabled>
-                        <option value="">Selecione</option>
-                        <option value="SP" {{ $cliente->uf == 'SP' ? 'selected' : '' }}>SP</option>
-                        <option value="RJ" {{ $cliente->uf == 'RJ' ? 'selected' : '' }}>RJ</option>
-                        <option value="MG" {{ $cliente->uf == 'MG' ? 'selected' : '' }}>MG</option>
-                        <option value="RS" {{ $cliente->uf == 'RS' ? 'selected' : '' }}>RS</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="observacao" class="form-label">Observação</label>
-                    <textarea class="form-control" id="observacao" name="observacao" rows="3" readonly>{{ $cliente->observacao }}</textarea>
-                </div>
-            </form>
+                @endforeach
+            </div>
+            @endif
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
